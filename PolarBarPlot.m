@@ -1,7 +1,7 @@
 function PolarBarPlot(theta,rho,cdata,diameter,labels)
 %PolarBarPlot(theta,rho,cdata,diameter,labels)
 %
-% Generates a polar bar plot by drawings bars with height THETA (in degrees) at angles
+% Generates a polar bar plot by drawings bars with height THETA (in radians) at angles
 % RHO. CDATA is a column vector of RGB values. CDATA can be either one
 % single column or a matrix [3xN] where N is the size of theta. Flat lines
 % are drawn at DIAMETER. LABELS is a cell
@@ -16,7 +16,8 @@ spikes = 0;
 spike_lw   = 1;%linewidth
 spike_ls   = '--';%linestyle
 %% get the negative values shifted so that min is 0
-mini       = min(rho)*2;
+mini = -5;
+% mini       = min(rho);
 rho        = rho - mini;
 %%
 % transform angle and height to patch friendly coordinates, each value pair
