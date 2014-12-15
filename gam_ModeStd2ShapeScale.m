@@ -1,4 +1,4 @@
-function [shape,scale,rate]=ModeStd2ShapeScale(mode,sd)
+function [shape,scale,rate]=gam_ModeStd2ShapeScale(mode,sd)
 %[shape,scale,rate]=ModeStd2ShapeScale(mu,std)
 %
 % Will return required shape and scale parameters for a desired MODE and STD

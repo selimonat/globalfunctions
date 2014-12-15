@@ -1,5 +1,5 @@
-function [shape,scale,rate]=MuStd2ShapeScale(mu,sd)
-%[shape,scale]=MuStd2ShapeScale(mu,std)
+function [shape,scale,rate]=gam_MuStd2ShapeScale(mu,sd)
+%[shape,scale]=gam_MuStd2ShapeScale(mu,std)
 %
 % Will return required shape and scale parameters for a desired MU and STD
 % variables for Gamma distribution. dgamma in BUGS however prefers the
