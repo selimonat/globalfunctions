@@ -1,18 +1,25 @@
-function TableOutput(names,numbers)
-%TableOutput(names,numbers)
+function TableOutput(col_names,row_names,numbers)
+%TableOutput(col_names,numbers)
 %
-%Print the matrix in NUMBERS as a table using the column titles in NAMES.
-%NAMES is a cell array of string characters, can be left empty. NUMBERS is
+%Print the matrix in NUMBERS as a table using the column titles in col_names.
+%col_names is a cell array of string characters, can be left empty. NUMBERS is
 %a matrix.
 
-if isempty(names)
-    names = cell(1,size(numbers,2));
+if isempty(col_names)
+    col_names = cell(1,size(numbers,2));
 end
+%
+tab           = 4;
+tcolumn       = length(col_names);
+column_size   = max(cellfun(@(x) length(x),col_names)) + tab;%max column size with the tab
+table_size    = column_size*(tcolumn+1);%with the row name column
+%%
+s_col_names   = [repmat(' ',1,column_size) repmat(['%-' num2str(column_size-tab) 's\t'],1,length(col_names)) '\n'];
+s_col_names   = [s_col_names repmat('=',1,table_size) '\n'];
+s_numbers     = [ '%-' num2str(column_size-1) 's: '  repmat(['%-' num2str(column_size) '.5f' ],1,tcolumn) '\n'];
+s_numbers     = repmat(s_numbers,1,size(numbers,1));
 
-s_names   = [repmat('%s\t',1,length(names)) '\n\n'];
-s_numbers = [repmat('%3.2g\t',1,size(numbers,2)) '\n'];
-s_numbers = repmat(s_numbers,1,size(numbers,1));
-
-fmt   = [s_names(:);s_numbers(:)]';
-values = num2cell(numbers);
-sprintf(fmt,names{:},values{:})
+fmt   = [s_col_names(:);s_numbers(:)]';
+%append the row_names to left of the values.
+values = reshape([row_names; num2cell(numbers(:))],7,tcolumn+1)'
+sprintf(fmt,col_names{:},values{:})
