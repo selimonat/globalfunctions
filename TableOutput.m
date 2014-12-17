@@ -11,6 +11,7 @@ end
 %
 tab           = 4;
 tcolumn       = length(col_names);
+trow          = size(row_names,1);
 column_size   = max(cellfun(@(x) length(x),col_names)) + tab;%max column size with the tab
 table_size    = column_size*(tcolumn+1);%with the row name column
 %%
@@ -21,5 +22,5 @@ s_numbers     = repmat(s_numbers,1,size(numbers,1));
 
 fmt   = [s_col_names(:);s_numbers(:)]';
 %append the row_names to left of the values.
-values = reshape([row_names; num2cell(numbers(:))],7,tcolumn+1)'
+values = reshape([row_names; num2cell(numbers(:))],trow,tcolumn+1)'
 sprintf(fmt,col_names{:},values{:})
