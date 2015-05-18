@@ -6,4 +6,6 @@ p = pwd;
 cd(path);
 [~,version_count] = system(['git rev-list --count --first-parent HEAD']);
 [~,version_id]    = system(['git describe  --always']);
+version_id        = deblank(version_id);
+version_count     = deblank(version_count);
 cd(p);
