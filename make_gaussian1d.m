@@ -1,16 +1,13 @@
-function out = make_gaussian1d(Xsize,peak,center,fwhmX,baseline)
-%out = make_gaussian1d(Xsize,peak,center,fwhmX,baseline)
+function [out] = make_gaussian1d(X,amp,fwhm,offset)
+%[out] = make_gaussian_fmri(X,amp,fwhm,offset);
 %
+%	Generates a Gaussian with AMP, FWHM and offset parameters. The center location is 
+%	fixed to zero.
 %
-%   PEAK is the peak position of the Gaussian. BASELINE is the zero level.
-%   This function is slightly different than make_gaussian1d_fmri, where
-%   peak argument is replaced by amplitude, where amplitude = peak-offset.
 
-sigmaX = fwhmX ./2.35482;
 
-[X] = 1:Xsize;
-X = X - center;
+sigmaX   = fwhm ./2.35482;
+out      = amp.*exp( - ((X.^2)./(2*sigmaX.^2)) ) + offset;
 
-out  = exp( - (( ( (X.^2)./(2*sigmaX.^2)) )));
 
-out  = (peak-baseline)*out+baseline;
+
