@@ -27,16 +27,16 @@ set(gcf,'renderer','opengl')
 % % % elseif strcmp(ext,'.jpg') | strcmp(ext,'jpeg')
 % % %     set(gcf,'renderer','painters')    
 % % % elseif strcmp(ext,'.eps')
-% % %     set(gcf,'renderer','painters')    
+    set(gcf,'renderer','painters')    
 % % % elseif strcmp(ext,'.ps')
 % % %     %set(gcf,'renderer','painters')    
 % % % end
 % % % 
 % % % %export
-% exportfig(gcf,WritePath,'format',ext(2:end),'FontSizeMin',8,'Bounds','loose','color','rgb',varargin{:});
+exportfig(gcf,WritePath,'format',ext(2:end),'FontSizeMin',8,'Bounds','loose','color','rgb',varargin{:});
 
 %you need to install Ghostscript
-export_fig(WritePath,'-png','-r120',varargin{:});%,'-transparent'
+% export_fig(WritePath,'-png','-r120',varargin{:});%,'-transparent'
 % export_fig(WritePath,'-png',varargin{:})
 
 
