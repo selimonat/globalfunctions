@@ -1,6 +1,13 @@
-function [h]=ffigure
+function [h]=ffigure(fnum)
 %ffigure
-% will create a new figure that is full screen
+% will create a new figure that is horizontally half-screen. FNUM is the
+% figure window number and optional.
 
 
-h = figure('position',get(0,'ScreenSize'))
+if nargin > 0
+    h=figure(fnum);
+else
+    h=figure;
+end
+ss = get(0,'ScreenSize');
+set(h,'position',[ss(1:2) ss(3) ss(4)]);
