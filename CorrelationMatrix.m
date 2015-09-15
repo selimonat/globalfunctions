@@ -30,3 +30,10 @@ elseif strcmp(method,'bootstrp')
         fprintf('Using this option with more than 2 variables doesn''t make sense, divide into pairwise comparisons prior\n');
     end
 end
+%
+figure(100);
+h = imagesc(cmat,[-1 1]);
+mask = double(mask);
+mask(mask == 0) = .5;
+colorbar
+set(h,'AlphaData',mask);

@@ -14,7 +14,7 @@ function [params]=RoughEstimator(x,y,funname,L,U)
 %
 %   Selim Onat
 
-grid = 35;
+grid = 10;
 %%
 
 
@@ -151,6 +151,29 @@ elseif strcmp(funname,'cosine')
         end
     end
     
+elseif strcmp(funname,'vonmisses_mobile')
+    %%
+    g    = single(zeros(length(x),grid*grid*10*1*grid));
+    lut  = single(zeros(length(L)-1,size(g,2)));
+    %    
+    amps      = linspace(L(1),U(1),grid);
+    widths    = linspace(L(2),U(2),grid);
+    freqs     = linspace(L(3),U(3),grid);
+    baselines = linspace(L(4),U(4),grid);
+    %
+    c       = 0;
+    for amp = amps
+        for width = widths
+            for freq = freqs;  
+                for baseline = baselines;
+                    c        = c+1;
+                    lut(:,c) = [amp;width;freq;baseline];
+                    dummy    = VonMises(x,amp,width,freq,baseline);
+                    g(:,c)   = dummy;
+                end
+            end
+        end
+    end    
     
 end
 

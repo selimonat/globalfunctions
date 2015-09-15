@@ -69,6 +69,12 @@ elseif funtype == 7
     o.U      = [  range(Y)*2  4   range(Y)*2 std(Y(:)+rand(length(Y),1).*eps)*2 ];  
     o.dof    = 3;
     o.funname= 'cosine';    
+elseif funtype == 8
+    o.fitfun = @(X,p) VonMises(X,p(1),p(2),p(3),p(4));%amp,kappa,centerX,offset
+    o.L      = [ eps                   0.1   eps     -pi   eps ];
+    o.U      = [ min(10,range(Y)*1.1)  20   2*pi   pi   10];  
+    o.dof    = 3;
+    o.funname= 'vonmisses_mobile'; 
     
 end
 %% set the objective function
@@ -84,31 +90,39 @@ if funtype > 1
 else %null model
     o.Init = mean(Y);
 end
+o.Init = o.Init + eps;
 %
 %% once we have the rough parameter values, create a sigma grid, and
 % estimate the sigma as well.
 tsample = 10000;
 sigmas  = linspace(0.001,std(Y)*3,tsample);
-% % c       = nan(1,tsample);
-% % for i = 1:tsample;
-% %     c(i) =  o.funny([o.Init sigmas(i)]);
-% % end
-% % [m i]  = min(c);
+% c       = nan(1,tsample);
+% for i = 1:tsample;
+%     c(i) =  o.funny([o.Init sigmas(i)]);
+% end
+% [m i]  = min(c);
 
 %% alternative method: based on the likelihood of sigma given the data points assuming a Gaussian normal distribution.
 PsigmaGiveny = sigmas.^-length(Y) .* exp( - (1./(2.*sigmas.^2) ) .* sum((Y - o.fitfun(X,o.Init)).^2) );
 [m i]        = max(PsigmaGiveny);
 %%
 o.Init   = [o.Init sigmas(i)];
-o.U(end) = o.Init(end)*10;
+
 %
 %% Optimize!
 %fmincon is preferable as it minimizes the function and not its square
 %as lsqnonln etc...
 
 %set optim options
-options         = optimset('Display','none','maxfunevals',10000,'tolX',10^-12,'tolfun',10^-12,'MaxIter',10000,'Algorithm','interior-point');
-[o.Est, o.Likelihood, o.ExitFlag]  = fmincon(o.funny, o.Init, [],[],[],[],o.L,o.U,[],options);
+options         = optimset('Display','off','maxfunevals',1000,'tolX',10^-12,'tolfun',10^-12,'MaxIter',1000,'Algorithm','interior-point');
+try
+    [o.Est, o.Likelihood, o.ExitFlag]  = fmincon(o.funny, o.Init, [],[],[],[],o.L,o.U,[],options);
+    o.Likelihood = o.funny(o.Est);
+catch
+    o.Est         = o.Init;
+    o.Likelihood = o.funny(o.Est);
+    o.ExitFlag   = 1;   
+end
 
 null.fitfun     = @(X,p) repmat(p(1),length(X),1);
 null.L          = [ min(Y)  0];%mean sigma
