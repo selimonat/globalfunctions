@@ -27,7 +27,7 @@ set(gcf,'renderer','opengl')
 % % % elseif strcmp(ext,'.jpg') | strcmp(ext,'jpeg')
 % % %     set(gcf,'renderer','painters')    
 % % % elseif strcmp(ext,'.eps')
-    set(gcf,'renderer','painters')    
+% % %     set(gcf,'renderer','painters')    
 % % % elseif strcmp(ext,'.ps')
 % % %     %set(gcf,'renderer','painters')    
 % % % end
