@@ -17,7 +17,7 @@ cmat = [];
 if strcmp(method,'bootci')
     corrfun = @(X) 1-pdist(X', 'correlation' );
     data    = mat;
-    dummy   = bootci(ts,{corrfun ,  data},'alpha',alpha);
+    dummy   = bootci(ts,{corrfun ,  data},'alpha',alpha,'type','bca');
     cmat    = squareform(corrfun(data));
     %detect entries where zero is not within the confidence interval
     mask    = squareform( (sum(dummy < 0) == 2)+(sum(dummy > 0) == 2) == 1);    
