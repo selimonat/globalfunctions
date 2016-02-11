@@ -34,8 +34,10 @@ elseif funtype == 2
 elseif funtype == 3
     
     o.fitfun = @(X,p) make_gaussian_fmri_zeromean(X,p(1),p(2));%2 amp fwhm
-    o.L      = [ -range(Y)*2  0     .01    ];
-    o.U      = [  range(Y)*2  20       std(Y(:)+rand(length(Y),1).*eps)*2 ];  
+%     o.L      = [ -range(Y)*2  0     .01    ];
+%     o.U      = [  range(Y)*2  20       std(Y(:)+rand(length(Y),1).*eps)*2 ]; 
+    o.L      = [.01          5                  .01    ];
+    o.U      = [range(Y)*2  180   std(Y(:)+rand(length(Y),1).*eps)*2 ]; 
     o.dof    = 3;
     o.funname = 'gaussian_ZeroMean';    
     %detect the mean, store it and subtract it

@@ -34,6 +34,6 @@ end
 figure(100);
 h = imagesc(cmat,[-1 1]);
 mask = double(mask);
-mask(mask == 0) = .5;
+mask(mask == 0) = .05;
 colorbar
 set(h,'AlphaData',mask);
