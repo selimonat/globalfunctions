@@ -86,7 +86,7 @@ violin(Y,'facecolor',[1 1 0;0 1 0;.3 .3 .3;0 0.3 0.1],'edgecolor','none','bw',0.
 ylabel('\Delta [yesno^{-2}]','FontSize',14)
 %}
 %%
-function[h,L,MX,MED,bw]=violin(Y,varargin)
+function[h,L,MX,MED,bw]=violin(Y,groupid,varargin)
 
 %defaults:
 %_____________________
@@ -97,15 +97,22 @@ alp=0.5;
 mc='k';
 medc='r';
 b=[]; %bandwidth
-plotlegend=1;
+plotlegend=0;
 plotmean=1;
 plotmedian=1;
 x = [];
 %_____________________
 
 %convert single columns to cells:
-if iscell(Y)==0
+if iscell(Y)==0 && isempty(groupid)%a matrix
     Y = num2cell(Y,1);
+elseif ~iscell(Y) && ~isempty(groupid)%two vectors (data and groupid)
+    c = 0;
+    for g = sort(unique(groupid))
+        c = c + 1;
+        dummy{c} = Y(groupid == g);
+    end
+    Y = dummy;
 end
 
 %get additional input parameters (varargin)
@@ -260,7 +267,7 @@ for i=1:size(xL,2)
     xL2=[xL2,xL{i},{''}];
 end
 set(gca,'TickLength',[0 0],'FontSize',12)
-box on
+box off
 
 if isempty(xL)==0
     set(gca,'XtickLabel',xL2)
