@@ -1,8 +1,10 @@
-function fwhm = vM2FWHM(amp,centerX,kappa,offset)
+function fwhm = vM2FWHM(kappa)
 %fwhm = vM2FWHM(amp,centerX,kappa,offset)
 %transforms a given vonMises function's kappa parameter to FWHM. Kappa
 %parameter has no intuition, however FWHM is easily understandable.
-
+amp     = 1;
+centerX = 0;
+offset  = 0;
 
 X           = linspace(-180,180,100000);%degrees
 Y           = Tuning.VonMises(X,amp,kappa,centerX,offset);%requires degrees, converts to rads inside.
