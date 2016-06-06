@@ -1,4 +1,4 @@
-function fwhm = vM2FWHM(kappa)
+function [fwhm, sigma] = vM2FWHM(kappa)
 %fwhm = vM2FWHM(amp,centerX,kappa,offset)
 %transforms a given vonMises function's kappa parameter to FWHM. Kappa
 %parameter has no intuition, however FWHM is easily understandable.
@@ -19,4 +19,5 @@ i = i+sum(X < centerX);
 % plot(abs(Y-half_height));
 
 fwhm        =  abs(diff(X([i i2])));
+sigma       =  fwhm ./2.35482;
 
