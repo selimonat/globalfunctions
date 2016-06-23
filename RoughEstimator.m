@@ -19,7 +19,7 @@ grid = 10;
 
 
 %create a reportoire of Gaussians or Gabors.
-if strcmp(funname,'gaussian_ZeroMean')
+if strcmp(funname,'gaussian_ZeroMean') || strcmp(funname,'vonmisses_probability')
     %%
     g    = single(zeros(length(x),50*25));
     lut  = single(zeros(length(L)-1,size(g,2)));
@@ -181,5 +181,4 @@ end
 %%
 res   = (sum( (g - repmat((y(:)),1,size(g,2))).^2 ));
 [m i] = min(res);
-
 params = double(lut(:,i));

@@ -21,4 +21,4 @@ while t < tt
     %%
     r(:,:,t) = Y1'*Y2;    
 end
-% r = mean(r,3);
+r = mean(r,3);

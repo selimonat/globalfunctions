@@ -7,9 +7,9 @@ function [down,up]=GetColorMapLimits(data,n)
 %
 %Selim, 2006
 
-
-m         = nanmean(data(:));
-sigma     = sqrt( nanmean(data(:).^2) - nanmean( data(:)).^2);
+i         = isfinite(data);
+m         = nanmean(data(i));
+sigma     = sqrt( nanmean(data(i).^2) - nanmean( data(i)).^2);
 
 up        = m+n*sigma;
 down      = m-n*sigma;

@@ -32,8 +32,8 @@ elseif strcmp(method,'bootstrp')
 end
 %
 figure(100);
-h = imagesc(cmat,[-1 1]);
-mask = double(mask);
-mask(mask == 0) = .05;
+h = imagesc(cmat(1:27,28:end),[-1 1]);
+mask = double(mask(1:27,28:end));
+mask(mask == 0) = .25;
 colorbar
 set(h,'AlphaData',mask);

@@ -73,10 +73,18 @@ elseif funtype == 7
     o.funname= 'cosine';    
 elseif funtype == 8
     o.fitfun = @(X,p) VonMises(X,p(1),p(2),p(3),p(4));%amp,kappa,centerX,offset
-    o.L      = [ eps                   0.1   eps     -pi   eps ];
-    o.U      = [ min(10,range(Y)*1.1)  20   2*pi   pi   10];  
+    o.L      = [ -range(Y)*2  10.^-16  -pi      0       0];%amp kappa offset
+    o.U      = [  range(Y)*2  20       pi      range(Y)*2  std(Y)];
     o.dof    = 3;
     o.funname= 'vonmisses_mobile'; 
+elseif funtype == 9
+    b   = BMEM;%Bayesian Magnet Effect Object
+    b.x = X;
+    o.fitfun = @(X,p) b.VonMises(p(1),p(2));%kappa,centerX
+    o.L      = [ 10.^-16  -pi        0];%kappa offset
+    o.U      = [ 25        pi        std(Y)];
+    o.dof    = 3;
+    o.funname= 'vonmisses_probability'; 
     
 end
 %% set the objective function

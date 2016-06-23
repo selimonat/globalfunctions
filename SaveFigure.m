@@ -15,7 +15,7 @@ if isempty(ext)%default extension.
 end
 
 %in order to not save the white background, I turn it off momentarily
-col = get(gcf,'color')
+col = get(gcf,'color');
 set(gcf, 'Color', 'w');
 % all = findall(gcf,'type','axes')
 % set(all,'color','none');
@@ -33,10 +33,10 @@ set(gcf,'renderer','opengl')
 % % % end
 % % % 
 % % % %export
-exportfig(gcf,WritePath,'format',ext(2:end),'FontSizeMin',8,'Bounds','loose','color','rgb',varargin{:});
+% % % exportfig(gcf,WritePath,'format',ext(2:end),'FontSizeMin',8,'Bounds','loose','color','rgb',varargin{:});
 
 %you need to install Ghostscript
-% export_fig(WritePath,'-png','-r120',varargin{:});%,'-transparent'
+export_fig(WritePath,'-png','-r120',varargin{:});%,'-transparent'
 % export_fig(WritePath,'-png',varargin{:})
 
 

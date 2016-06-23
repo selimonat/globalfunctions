@@ -14,8 +14,8 @@ function VerticalXlabel(labels,varargin);
 
 
 tlabels  = length(labels);
-tickpos = get(gca,'xtick');
 set(gca,'xtick',1:tlabels);
+tickpos = get(gca,'xtick');
 for c = 1:length(labels);
     text(tickpos(c),0.05,labels{c},'rotation',90,varargin{:});
 end
