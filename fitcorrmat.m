@@ -65,7 +65,7 @@ elseif strcmp(method,'gradient')
         if ~any(isnan(Y(:)))%dont dive into shit
             cost_fun                           = @(param) sum((Y(:) - Vectorize(getcorrmat(param(1),param(2),param(3),param(4)))).^2);
             r = range(Y(:));
-            x0                                 = rand(1,4)*r;%random initialization of parameters;
+            x0                                 = [.5 .5 .5 .5];%random initialization of parameters;
             [param(:,ns) fval exitflag output] = fminsearch(cost_fun,x0,opt);
             if exitflag == 0
                 keyboard
