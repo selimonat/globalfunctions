@@ -1,4 +1,4 @@
-function ImageWithText(mat1,mat2,varargin);
+function h=ImageWithText(mat1,mat2,varargin);
 %ImageWithText(mat1,mat2,varargin);
 %
 %
@@ -14,7 +14,7 @@ else
 end
 
 
-imagesc(mat1,cb);            %# Create a colored plot of the matrix values
+h=imagesc(mat1,cb);            %# Create a colored plot of the matrix values
 colorbar
 
 
