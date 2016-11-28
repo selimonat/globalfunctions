@@ -11,7 +11,7 @@ function SetFearGenBarColors(h,varargin)
 
 h     = get(h,'children');
 tbar  = length(get(h,'YData'));
-set(h,'CData', repmat(1:tbar,1,tbar/tbar),'edgecolor','none');
+set(h,'CData', repmat(1:tbar,[1,tbar/tbar]),'edgecolor','none');
 %
 if nargin == 1
     color    = GetFearGenColors;    

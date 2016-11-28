@@ -62,8 +62,7 @@ for d= diameter-mini-1
     x     = d*cos(dummy);
     y     = d*sin(dummy);
     line(x,y,'color',[.2 .2 .2],'linewidth',spike_lw )
-    text(max(x),0,mat2str(d+mini+1),'fontsize',15,'horizontalalignment','center');
-    d
+    text(max(x),0,mat2str(d+mini+1),'fontsize',9,'horizontalalignment','center');    
 end
 %% draw finally the outer circle
 if outer
@@ -76,9 +75,9 @@ end
 
 %% drawn the labels
 for nlabel = 1:length(labels)    
-    x = L*1.05*cos(theta(nlabel));
-    y = L*1.05*sin(theta(nlabel));
-    text(x,y,labels{nlabel},'fontsize',15,'horizontalalignment','center')
+    x = L*.8*cos(theta(nlabel));
+    y = L*.8*sin(theta(nlabel));
+    text(x,y,labels{nlabel},'fontsize',15,'horizontalalignment','center','color','k')
 end
 %%
 axis square
