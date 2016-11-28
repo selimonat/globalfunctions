@@ -38,6 +38,6 @@ mask = double(mask);
 mask(mask == 0) = .25;
 colorbar
 set(h,'AlphaData',mask);
-hh=ImageWithText(cmat,cmat);
+hh=ImageWithText(cmat,cmat,[-1 1]);
 set(hh,'AlphaData',0);
 hold on;
