@@ -1,3 +1,3 @@
 function [x]=demean(x)
 
-x = x - repmat(mean(x),size(x,1),1);
+x = x - repmat(nanmean(x),size(x,1),1);

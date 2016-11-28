@@ -33,7 +33,7 @@ set(gcf,'renderer','opengl')
 % % % end
 % % % 
 % % % %export
-% % % exportfig(gcf,WritePath,'format',ext(2:end),'FontSizeMin',8,'Bounds','loose','color','rgb',varargin{:});
+% exportfig(gcf,WritePath,'format',ext(2:end),'FontSizeMin',8,'Bounds','loose','color','rgb',varargin{:});
 
 %you need to install Ghostscript
 export_fig(WritePath,'-png','-r120',varargin{:});%,'-transparent'

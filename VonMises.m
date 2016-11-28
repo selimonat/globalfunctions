@@ -5,6 +5,7 @@ function [out] = VonMises(X,amp,kappa,centerX,offset)
 %http://en.wikipedia.org/wiki/Von_Mises_distribution. This is the base
 %function used by VonMises_fmri_*.m functions.
 %
+% X is in radians!
 
 
 

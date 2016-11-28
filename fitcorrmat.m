@@ -59,7 +59,7 @@ elseif strcmp(method,'gradient')
     ts       = size(cormat,3);
     param    = nan(4,ts);
     fit      = nan(8,8,ts);
-    opt      = optimset('display','iter','tolfun',10^-20,'tolx',10^-20,'maxfunevals',10000,'maxiter',10000);    
+    opt      = optimset('display','none','tolfun',10^-16,'tolx',10^-16,'maxfunevals',10000,'maxiter',10000);    
     for ns = 1:ts%run across subjects
         Y                                      = cormat(:,:,ns);%data for this subject
         if ~any(isnan(Y(:)))%dont dive into shit
@@ -67,13 +67,17 @@ elseif strcmp(method,'gradient')
             r = range(Y(:));
             x0                                 = [.5 .5 .5 .5];%random initialization of parameters;
             [param(:,ns) fval exitflag output] = fminsearch(cost_fun,x0,opt);
+            param(1,ns)  = abs(param(1,ns));
             if exitflag == 0
-                keyboard
+%                 keyboard
             end
             fit(:,:,ns)                        = getcorrmat(param(1,ns),param(2,ns),param(3,ns),param(4,ns));
             %%
-            figure(10);
-            imagesc([cormat(:,:,ns) fit(:,:,ns) cormat(:,:,ns)-fit(:,:,ns)]);colorbar;drawnow;%pause
+%             figure(10);subplot(1,2,1)
+%             imagesc([CancelDiagonals(cormat(:,:,ns),NaN) CancelDiagonals(fit(:,:,ns),NaN) CancelDiagonals(cormat(:,:,ns)-fit(:,:,ns),NaN)]);colorbar;drawnow;
+%             subplot(1,2,2)
+%             bar(param(1:2,ns));
+%             pause            
         end
     end
 end

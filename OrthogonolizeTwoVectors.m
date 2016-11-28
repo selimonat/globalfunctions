@@ -8,12 +8,12 @@ function [e,bestfit]=OrthogonolizeTwoVectors(e)
 
 
 
-fprintf('Correlations before orthonormalizing:\n');
-corrcoef(e)
+%fprintf('Correlations before orthonormalizing:\n');
+%corrcoef(e)
 %find the best fitting e1 to e2. 
 beta    = [e(:,1) ones(size(e,1),1)]\e(:,2);
 bestfit = e(:,1)*beta(1);
 %
 e(:,2)  = [e(:,2)-bestfit];
-fprintf('New correlations after orthonormalizing:\n');
-corrcoef(e)
+%fprintf('New correlations after orthonormalizing:\n');
+%corrcoef(e)
