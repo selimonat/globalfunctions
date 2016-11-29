@@ -91,25 +91,27 @@ T       = 50;
 t       = [1:T]';
 x       = deg2rad([-135:45:180]');
 
-sigma_y  = repmat(.01,1,50);
+sigma_y  = repmat(.1,1,50);
 clear amp offset kappa;
 offset(1)  = 10;
 amp(1)     = 10;
-kappa(1)   = 1;
+kappa(1)   = .0001;
 
-doffset  = [0 randn(1,T-1)]';
-damp     = [0 randn(1,T-1)]';
-dkappa   = [0 randn(1,T-1)]';
-
+doffset  = [0 diff([0 t(1:end-1)'*.001 + randn(1,T-1)*.0009])]';
+damp     = [0 diff([0 t(1:end-1)'*.02   + randn(1,T-1)*.009])]';
+dkappa   = [0 diff([0 log(t(1:end-1))'*.7 + randn(1,T-1)*.00025])]';
 y       = [];
 for ti = 1:T
     %y(ti,:) = [offset(ti) + amp(ti)*exp(-(x/sd(ti)).^2) + randn(8,1)*sigma_y(ti)]';
     amp(end+1)    = amp(end)    + damp(ti);
-    kappa(end+1)  = kappa(end)  + dkappa(ti);
+    kappa(end+1)  = max(0.05,kappa(end)  + dkappa(ti));
     offset(end+1) = offset(end) + doffset(ti);
     y(ti,:) = VonMises(x,amp(end),kappa(end),0,offset(end)) + randn(8,1)*sigma_y(ti);    
 end
-imagesc(y);colorbar;
-
-
+subplot(1,4,1);plot(offset);subplot(1,4,2);plot(amp);subplot(1,4,3);plot(kappa);
+subplot(1,4,4);imagesc(y);colorbar;
+%%
+cd /home/onat/Documents/Code/StanModelsMatlab/FitVonMises_RandomWalk
+!rm FitVonMises_RandomWalk FitVonMises_RandomWalk.hpp  output-* temp.*
+fit = FitVonMises_RandomWalk_stan(x,y,t,'iter',500);
 
