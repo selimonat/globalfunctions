@@ -30,7 +30,7 @@ init.offset      = min(15,t2.fit_results{nfun}.params(:,3));
 init.sigma_y     = mean(t2.fit_results{nfun}.params(:,4));
 %%
 cd ~/Documents/Code/StanModelsMatlab/FitVonMises/
-fit = FitVonMises_stan(x,y,t,'iter',50000,'chains',4,'init',init);
+fit = FitVonMises_stan(x,y,t,'chains',4);
 %%
 figure;
 subplot(3,4,1);
@@ -91,27 +91,68 @@ T       = 50;
 t       = [1:T]';
 x       = deg2rad([-135:45:180]');
 
-sigma_y  = repmat(.1,1,50);
+sigma_y  = repmat(.01,1,50);
 clear amp offset kappa;
-offset(1)  = 10;
-amp(1)     = 10;
-kappa(1)   = .0001;
+offset(1)  = 0;
+amp(1)     = 0;
+kappa(1)   = .05;
 
-doffset  = [0 diff([0 t(1:end-1)'*.001 + randn(1,T-1)*.0009])]';
-damp     = [0 diff([0 t(1:end-1)'*.02   + randn(1,T-1)*.009])]';
-dkappa   = [0 diff([0 log(t(1:end-1))'*.7 + randn(1,T-1)*.00025])]';
-y       = [];
+doffset  = diff([0 t(1:end)'*.02 + .05])';
+damp     = diff([0 t(1:end)'*-.04 + .05])';
+dkappa   = diff([0 t(1:end)'*.02 + .05])'.*0;
+y        = [];
 for ti = 1:T
     %y(ti,:) = [offset(ti) + amp(ti)*exp(-(x/sd(ti)).^2) + randn(8,1)*sigma_y(ti)]';
-    amp(end+1)    = amp(end)    + damp(ti);
+    amp(end+1)    = amp(end)             + damp(ti);
     kappa(end+1)  = max(0.05,kappa(end)  + dkappa(ti));
-    offset(end+1) = offset(end) + doffset(ti);
-    y(ti,:) = VonMises(x,amp(end),kappa(end),0,offset(end)) + randn(8,1)*sigma_y(ti);    
+    offset(end+1) = offset(end)          + doffset(ti);
+    y(ti,:)       = VonMises(x,amp(end),kappa(end),0,offset(end)) + randn(8,1)*sigma_y(ti);    
 end
 subplot(1,4,1);plot(offset);subplot(1,4,2);plot(amp);subplot(1,4,3);plot(kappa);
 subplot(1,4,4);imagesc(y);colorbar;
 %%
+init.amp    =[0 ; zeros(49,1)];
+init.offset =[0 ; zeros(49,1)];
+init.kappa  =[0 ; zeros(49,1)]+.5;
+init.damp    =[0 ; zeros(49,1)];
+init.doffset =[0 ; zeros(49,1)];
+init.dkappa  =[0 ; zeros(49,1)];
 cd /home/onat/Documents/Code/StanModelsMatlab/FitVonMises_RandomWalk
 !rm FitVonMises_RandomWalk FitVonMises_RandomWalk.hpp  output-* temp.*
 fit = FitVonMises_RandomWalk_stan(x,y,t,'iter',500);
 
+%% many subjects;
+S       = 20;
+T       = 50;
+t       = [1:T]';
+x       = deg2rad([-135:45:180]');
+offset  = linspace(0,0,T)';
+amp     = linspace(0,1,T)';
+kappa   = logspace(-2,1.4,T)';
+sigma_y = repmat(.001,1,50);
+y       = [];
+for si = 1:S;
+for ti = 1:T
+    %y(ti,:) = [offset(ti) + amp(ti)*exp(-(x/sd(ti)).^2) + randn(8,1)*sigma_y(ti)]';
+    y(ti,:,si) = VonMises(x,amp(ti),kappa(ti),0,offset(ti)) + randn(8,1)*sigma_y(ti);    
+end
+end
+
+imagesc(y(:,:,1))
+%% ok estimate initial values with MLE
+data.y           = y;
+data.x           = repmat(x(:)',size(data.y,1),1);
+data.ids         = t
+t2               = Tuning(data);
+t2.visualization = 0;
+t2.gridsize      = 10;
+nfun             = 5;
+t2.SingleSubjectFit(nfun);
+init.amp         = t2.fit_results{nfun}.params(:,1);
+init.kappa       = t2.fit_results{nfun}.params(:,2);
+init.offset      = min(15,t2.fit_results{nfun}.params(:,3));
+init.sigma_y     = mean(t2.fit_results{nfun}.params(:,4));
+%%
+cd ~/Documents/Code/StanModelsMatlab/FitVonMises/
+!rm FitVonMises FitVonMises.hpp  output-* temp.*
+fit = FitVonMises_stan(x,y,'chains',4,'iter',100);
