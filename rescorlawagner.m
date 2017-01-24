@@ -1,4 +1,4 @@
-function [V_t,PE] = rescorlawagner (R,a,init)
+ function [V_t,PE] = rescorlawagner (R,a,init)
 %function rescorlawagner	computes rescorla-wagner for alpha a
 %				and initial V(t) init
 %				mm, 03/11
@@ -19,7 +19,6 @@ function [V_t,PE] = rescorlawagner (R,a,init)
 %       PE  = prediction error array
 
 %%% vars
-a
 % R  = a(2).*R;
 V  = nan(1,numel(R)); %initial values 
 V(1)=init;
