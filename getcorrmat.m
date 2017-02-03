@@ -1,35 +1,39 @@
-function [cmat] = getcorrmat(amp_circ,amp_gau,amp_const,amp_diag)
-%[cmat] = getcorrmat(amp_circ,amp_gau,amp_const);
+function [cmat,w] = getcorrmat(amp_circ,amp_gau,amp_const,amp_diag)
+%[cmat.w] = getcorrmat(amp_circ,amp_gau,amp_const);
 %
 % computes a covariance matrix based on circular, gaussian, constant and
 % diagonal contributions.
 
-
+if length(amp_circ) == 1
+    amp_circ = repmat(amp_circ,1,2);
+end
 
 % 
 x    = [pi/4:pi/4:2*pi];
 % 
-w    = [amp_circ*cos(x);...
-        amp_circ*sin(x);...%circular components
-        make_gaussian1d(x-pi-deg2rad(22.5),amp_gau,2,0);...%gaussian component
+w    = [amp_circ(1)*cos(x);...
+        amp_circ(2)*sin(x);...%circular components
+        make_gaussian1d(x-pi,amp_gau,2,0);...%gaussian component
         -ones(1,8)*amp_const; ...%constant component.
         diag(ones(1,8))*amp_diag];%diagonal component
-cmat = w'*w;
-% cmat = corrcov(cmat);
     
-% x       = [pi/4:pi/4:2*pi]';
-% basis   = [cos(x)   sin(x)   make_gaussian1d(x-pi,2,4,0) -ones(8,1) diag(ones(1,8))*amp_diag];
-% weights = [amp_circ amp_circ amp_gau                      amp_const repmat(amp_const,1,8)];
-% cmat    = (basis*diag(weights)*basis');  
-% cmat    = corrcov(cmat);
-% cmat    = cmat.^2;
-
-
-% basis   = basis*diag(weights);
-% basis2  = basis./repmat(sqrt(sum(basis.^2,2)),1,size(basis,2));
-% cmat    = basis2*basis2';
-
-% cmat    = (basis*diag(weights)*basis');
+    
+cmat = w'*w;
+cmat = corrcov(cmat);
+    
+% % % x       = [pi/4:pi/4:2*pi]';
+% % % basis   = [cos(x)   sin(x)   make_gaussian1d(x-pi,2,4,0) -ones(8,1) diag(ones(1,8))*amp_diag];
+% % % weights = [amp_circ amp_circ amp_gau                      amp_const repmat(amp_const,1,8)];
+% % % cmat    = (basis*diag(weights)*basis');  
+% % % cmat    = corrcov(cmat);
+% % % cmat    = cmat.^2;
+% % % 
+% % % 
+% % % basis   = basis*diag(weights);
+% % % basis2  = basis./repmat(sqrt(sum(basis.^2,2)),1,size(basis,2));
+% % % cmat    = basis2*basis2';
+% % % 
+% % % cmat    = (basis*diag(weights)*basis');
 
 %%
 % weights = [ 40 40 51 ];
