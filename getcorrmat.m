@@ -1,8 +1,15 @@
-function [cmat,w] = getcorrmat(amp_circ,amp_gau,amp_const,amp_diag)
+function [cmat,w] = getcorrmat(amp_circ,amp_gau,amp_const,amp_diag,varargin)
 %[cmat.w] = getcorrmat(amp_circ,amp_gau,amp_const);
 %
 % computes a covariance matrix based on circular, gaussian, constant and
 % diagonal contributions.
+
+if nargin >4 
+    width = varargin{1};
+else
+    width = 2;
+end
+    
 
 if length(amp_circ) == 1
     amp_circ = repmat(amp_circ,1,2);
@@ -13,7 +20,7 @@ x    = [pi/4:pi/4:2*pi];
 % 
 w    = [amp_circ(1)*cos(x);...
         amp_circ(2)*sin(x);...%circular components
-        make_gaussian1d(x-pi,amp_gau,2,0);...%gaussian component
+        make_gaussian1d(x-pi,amp_gau,width,0);...%gaussian component
         -ones(1,8)*amp_const; ...%constant component.
         diag(ones(1,8))*amp_diag];%diagonal component
     

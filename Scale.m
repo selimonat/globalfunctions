@@ -6,8 +6,8 @@ function [y]=Scale(x)
 %
 %Selim 2006 November 15
 
-
-if ~isempty(x)
+y = x;
+if ~isempty(x) && sum(diff(x)) ~= 0;
     x = x - min(x(:));
     y = x./max(x(:));
 end

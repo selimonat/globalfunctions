@@ -7,5 +7,7 @@ function subplotChangeSize(h,W,H)
 %Selim, 06-Mar-2009 18:13:33
 
 
-pos = get(h,'position');
-set(h,'position',[pos(1)-W/2 pos(2)-H/2 pos(3)+W pos(4)+H]);
+for nh = 1:length(h)
+    pos = get(h(nh),'position');
+    set(h(nh),'position',[pos(1)-W/2 pos(2)-H/2 pos(3)+W pos(4)+H]);
+end
