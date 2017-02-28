@@ -1,4 +1,4 @@
-function [t]=pval2asterix(p)
+function [t]=pval2asterix(pval)
 %
 %   Generates asteriks strings based on the p-value
 %
@@ -10,4 +10,16 @@ function [t]=pval2asterix(p)
 % 0.01 to 0.05	Significant         *
 % ≥ 0.05        Not significant     ns
 
-t = repmat('*',1,ceil(-log10([0.05 0.01 0.001])./-log10(.05)));
+t =[];
+if pval < 0.05 & pval >= 0.01
+    repfac = 1;
+elseif pval < 0.01 & pval >= 0.001
+    repfac = 2;
+elseif pval < 0.001
+    repfac = 3;
+else
+    repfac = 0;
+    t = sprintf('ns (p = %0.4g)',pval);
+    return
+end
+t = repmat('*',1,repfac);
