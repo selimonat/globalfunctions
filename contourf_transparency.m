@@ -6,5 +6,5 @@ function contourf_transparency(hContour,alpha_level);
 hFills = hContour.FacePrims;  % array of TriangleStrip objects
 [hFills.ColorType] = deal('truecoloralpha');  % default = 'truecolor'
 for idx = 1 : numel(hFills)
-   hFills(idx).ColorData(4) = 255*alpha_level;   % default=255
+   hFills(idx).ColorData(4) = 255*alpha_level(idx);   % default=255
 end

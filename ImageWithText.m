@@ -18,7 +18,7 @@ h=imagesc(mat1,cb);            %# Create a colored plot of the matrix values
 colorbar
 
 
-textStrings = num2str(mat2(:),'%4.2f');  %# Create strings from the matrix values
+textStrings = num2str(mat2(:),'%4.0f');  %# Create strings from the matrix values
 textStrings = strtrim(cellstr(textStrings));  %# Remove any space padding
 [x,y] = meshgrid(1:size(mat1,2),1:size(mat1,1));   %# Create x and y coordinates for the strings
 hStrings = text(x(:),y(:),textStrings(:),...      %# Plot the strings

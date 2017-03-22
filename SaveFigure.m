@@ -3,7 +3,7 @@ function SaveFigure(WritePath,varargin)
 
 %delete if there is mat suffix
 if strcmp(WritePath(end-3:end),'.mat')
-	WritePath(end-3:end)=[];
+    WritePath(end-3:end)=[];
 end
 
 [p,fname,ext]=fileparts(WritePath);
@@ -20,23 +20,25 @@ set(gcf, 'Color', 'w');
 % all = findall(gcf,'type','axes')
 % set(all,'color','none');
 
-ext(1) = '-';
+
 % % % %decide on drawer
-% % % if strcmp(ext,'.png')
-set(gcf,'renderer','opengl')
-% % % elseif strcmp(ext,'.jpg') | strcmp(ext,'jpeg')
-% % %     set(gcf,'renderer','painters')    
-% % % elseif strcmp(ext,'.eps')
-% % %     set(gcf,'renderer','painters')    
-% % % elseif strcmp(ext,'.ps')
-% % %     %set(gcf,'renderer','painters')    
-% % % end
-% % % 
+if strcmp(ext,'.png')
+    set(gcf,'renderer','opengl')
+    export_fig(WritePath,'-png','-r120',varargin{:});%,'-transparent'
+    % % % elseif strcmp(ext,'.jpg') | strcmp(ext,'jpeg')
+    % % %     set(gcf,'renderer','painters')
+elseif strcmp(ext,'.eps')
+    set(gcf,'renderer','painters');
+    export_fig(WritePath,'-depsc','-r120',varargin{:});%,'-transparent'
+    % % % elseif strcmp(ext,'.ps')
+    % % %     %set(gcf,'renderer','painters')
+end
+% % %
 % % % %export
 % exportfig(gcf,WritePath,'format',ext(2:end),'FontSizeMin',8,'Bounds','loose','color','rgb',varargin{:});
 
 %you need to install Ghostscript
-export_fig(WritePath,'-png','-r120',varargin{:});%,'-transparent'
+
 % export_fig(WritePath,'-png',varargin{:})
 
 

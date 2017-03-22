@@ -19,7 +19,7 @@ elseif pval < 0.001
     repfac = 3;
 else
     repfac = 0;
-    t = sprintf('ns (p = %0.4g)',pval);
+    t = sprintf('ns\n(%0.1g)',pval);
     return
 end
 t = repmat('*',1,repfac);
