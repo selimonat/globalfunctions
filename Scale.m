@@ -7,7 +7,7 @@ function [y]=Scale(x)
 %Selim 2006 November 15
 
 y = x;
-if ~isempty(x) && sum(diff(x)) ~= 0;
+if ~isempty(x(:)) && sum(abs(diff(x(:)))) ~= 0;
     x = x - min(x(:));
     y = x./max(x(:));
 end

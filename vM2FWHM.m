@@ -5,6 +5,9 @@ function [fwhm, sigma] = vM2FWHM(kappa)
 amp     = 1;
 centerX = 0;
 offset  = 0;
+%
+s       = size(kappa);
+kappa   = kappa(:);
 
 for nka = 1:length(kappa)
     X           = linspace(-180,180,100000);%degrees
@@ -23,3 +26,5 @@ for nka = 1:length(kappa)
     sigma(nka)       =  fwhm(nka)./2.35482;
 end
 
+fwhm  = reshape(fwhm,[s]);
+sigma = reshape(sigma,[s]);
