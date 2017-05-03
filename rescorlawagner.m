@@ -4,15 +4,17 @@
 %				mm, 03/11
 %
 %Synopsis:
-%       [V,PE] = rescorlawagner(D,R,a)
-%       [V,PE] = rescorlawagner(D,R,a,init)
+%       [V,PE] = rescorlawagner(R,a)
+%       [V,PE] = rescorlawagner(R,a_zero,a_lambda,init)
 %
 %
 %Input:
-%	  D  = data
-%       R  = reward (e.g. shock/no shock), required
-%       a  = alpha (learning rate), required
-%	init = initial values for V(trial), optional (default 0)
+%       
+%       R         = reward (e.g. shock/no shock), required
+%       a_zero    = alpha (learning rate), required
+%       a_lambda  = exponential decay rate for alpha_zero. Use Inf for no
+%       decay.
+%       init      = initial values for V(trial), optional (default 0)
 %
 %Output:
 %       V  = VT array
