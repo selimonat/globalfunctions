@@ -23,8 +23,8 @@ set(gcf, 'Color', 'w');
 
 % % % %decide on drawer
 if strcmp(ext,'.png')
-    set(gcf,'renderer','opengl')
-    export_fig(WritePath,'-png','-r120',varargin{:});%,'-transparent'
+%     set(gcf,'renderer','opengl')
+    export_fig(WritePath,'-png',varargin{:});%,'-transparent'
     % % % elseif strcmp(ext,'.jpg') | strcmp(ext,'jpeg')
     % % %     set(gcf,'renderer','painters')
 elseif strcmp(ext,'.eps')
