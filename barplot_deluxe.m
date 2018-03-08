@@ -1,6 +1,6 @@
 function barplot_deluxe(D,varargin)
-%will plot bars, SEM errorbars, and asterix. Use VARARGIN to precise 
-%xticklabels.
+%will plot bars, SEM errorbars, and asterix on the current axis. Use
+%VARARGIN to precise xticklabels.
 
 bar(nanmean(D),'k');
 hold on;
