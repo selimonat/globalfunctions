@@ -17,13 +17,13 @@ tpoints     = size(mat,1);
 xcenters    = 1:2:tcol*2;
 
 color       = [0.3 .3 .3];
-MarkerSize  = 32;
+MarkerSize  = 24;
 LineWidth   = 2;
 transparency= .3;
 %% plot dots
 for ncol = 1:tcol
     X       = linspace(0.5,1.5,tpoints)'+2*(ncol-1);
-    h(ncol) = scatter(X(:),mat(:,ncol),MarkerSize  ,color,'filled','MarkerFaceColor',color,'MarkerEdgeColor',color,'MarkerFaceAlpha',transparency , 'MarkerEdgeAlpha',transparency,varargin{:});
+    h(ncol) = scatter(X(:),mat(:,ncol),MarkerSize  ,color,'filled','MarkerFaceColor',color,'MarkerEdgeColor','none','MarkerFaceAlpha',transparency , 'MarkerEdgeAlpha',transparency,varargin{:});
     hold on;
     plot([X(1)-.5 X(end)+.5],repmat(nanmean(mat(:,ncol)),1,2),'-','color','k','linewidth',1);
 end
