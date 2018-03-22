@@ -29,6 +29,6 @@ end
 %
 mini = [min(y(:,1)) max(y(:,2))];
 for i = all;
-    set(i,'ylim',mini);
+    set(i,'ylim',mini);    
 end
 

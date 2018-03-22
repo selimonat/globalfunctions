@@ -9,6 +9,6 @@ end
 [~, P] = ttest(mat,0,'alpha',.05);
 for n = 1:size(P,2)
     if P(n) <= .05;
-        text(xcenters(n),max(ylim)+range(ylim)*.1,pval2asterix(P(n)),'HorizontalAlignment','center','fontsize',16);
+        text(xcenters(n),max(ylim)+range(ylim)*.1,pval2asterix(P(n)),'HorizontalAlignment','center','fontsize',12);
     end
 end
